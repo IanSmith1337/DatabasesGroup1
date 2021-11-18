@@ -2,7 +2,7 @@
 
 ## Members:
 
-Ian Smith
-Julia Caffrey-Hill
-Hanisha Marivada
-Nivedha Reka Venkataramanan
+* Ian Smith
+* Julia Caffrey-Hill
+* Hanisha Marivada
+* Nivedha Reka Venkataramanan
