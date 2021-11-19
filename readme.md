@@ -13,3 +13,4 @@
 Windows (Command Prompt): `.venv\scripts\activate`
 
 Mac/Linux (Terminal): `source .venv\scripts\activate.ps1`
+
