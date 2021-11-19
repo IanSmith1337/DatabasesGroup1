@@ -1,3 +1,16 @@
+{% if message %}
+    <script>
+        alert("{{ message }}");
+    </script>
+{% endif %}
+{% if logMessage %}
+    <script>
+        var mDoc = new DOMParser().parseFromString("{{ logMessage }}", "text/html");
+        var m = new String(mDoc.documentElement.textContent);
+        m = m.replaceAll("!n!", "\n");
+        console.error(m);
+    </script>
+{% endif %}
 <!DOCTYPE html>
 <html>
     <head>
@@ -5,5 +18,14 @@
     </head>
     <body>
         <h1>Login Page</h1>
+        <h2>You must be logged in to access this site.</h2>
+        <form method="POST" action="/postLogin/">
+            {% csrf_token %}
+            <label for="username">Username</label><br>
+            <input type="text" name="username" id="username"></input><br><br>
+            <label for="password">Password</label><br>
+            <input type="password" name="password" id="password"></input><br><br>
+            <input type="submit" value="Sign In">
+        </form>
     </body>
 </html>

@@ -21,8 +21,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # Here we are assigning the path of our url
     path('', views.signIn),
-    path('login/', views.LogIn),
+    path('postLogin/', views.handleLogin),
     path('signUp/', views.signUp, name="signup"),
-    path('logout/', views.logout, name="log"),
-    path('signUp/', views.createAccount),
+    path('logout/', views.logout, name="logout"),
+    path('postSignUp/', views.handleSignUp),
 ]

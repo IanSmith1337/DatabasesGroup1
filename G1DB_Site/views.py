@@ -2,6 +2,8 @@ from django.shortcuts import render
 from pyrebase import *
 from pyrebase.pyrebase import Database
 
+
+
 config = {
   "apiKey": "AIzaSyCp1dOGmQo8v1gzkktKhxgzg7poFsXvMDI",
   "authDomain": "g1database.firebaseapp.com",
@@ -10,17 +12,25 @@ config = {
 }
 
 firebase = pyrebase.initialize_app(config)
+database = firebase.database()
+auth = firebase.auth()
 
 def signIn(request):
     return render(request,"login.html")
 def home(request):
     return render(request,"home.html")
+def signUp(request):
+    return render(request,"registration.html")
 
-def LogIn(request):
-    auth = firebase.auth()
+def handleLogin(request):
     email = request.POST.get("email")
     password = request.POST.get("password")
-    user = auth.sign_in_with_email_and_password(email, password)
+    try:
+        user = auth.sign_in_with_email_and_password(email, password)
+    except Exception as e:
+        message = "Invalid Credentials, please re-enter."
+        logMessage = str(e).replace("\n", "!n!")
+        return render(request,"login.html",{"message":message, "logMessage":logMessage})
     session_id=user['idToken']
     request.session['uid']=str(session_id)
     return render(request,"home.html",{"email":email})
@@ -32,11 +42,9 @@ def logout(request):
         pass
     return render(request,"login.html")
  
-def signUp(request):
-    return render(request,"registration.html")
+
  
-def createAccount(request):
-    auth = firebase.auth()
+def handleSignUp(request):
     email = request.POST.get('email')
     password = request.POST.get('pass')
     name = request.POST.get('name')
