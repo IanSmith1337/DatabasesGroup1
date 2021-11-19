@@ -9,6 +9,10 @@
 
 &nbsp;
 
+## TODO: Connect Django Auth system to HTML.
+
+&nbsp;
+
 # Usage Guide:
 
 ## To start the Virtual Environment:

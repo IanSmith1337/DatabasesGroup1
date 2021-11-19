@@ -15,7 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-
+from G1DB_Site import views
+ 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # Here we are assigning the path of our url
+    path('', views.signIn),
+    path('login/', views.LogIn),
+    path('signUp/', views.signUp, name="signup"),
+    path('logout/', views.logout, name="log"),
+    path('signUp/', views.createAccount),
 ]
