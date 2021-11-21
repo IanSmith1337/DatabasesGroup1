@@ -19,6 +19,8 @@
 
 Windows (Command Prompt): `.venv\scripts\activate`
 
+**NOTE: If you get an error message, try executing the solution found here: *https://stackoverflow.com/questions/18713086/virtualenv-wont-activate-on-windows***
+
 Mac/Linux (Terminal): `source .venv\scripts\activate.ps1`
 
 ## To start the server on localhost:
