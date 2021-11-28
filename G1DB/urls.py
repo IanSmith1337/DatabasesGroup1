@@ -19,10 +19,11 @@ from G1DB_Site import views
  
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # Here we are assigning the path of our url
-    path('', views.signIn),
+    path('', views.entry),
+    path('home/', views.home, name="home"),
+    path('login/', views.login, name="login"),
+    path('signup/', views.signup, name="signup"),
     path('postLogin/', views.handleLogin),
-    path('signUp/', views.signUp, name="signup"),
-    path('logout/', views.logout, name="logout"),
     path('postSignUp/', views.handleSignUp),
+    path('logout/', views.logout, name="logout")
 ]
