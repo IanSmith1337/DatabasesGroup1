@@ -109,6 +109,7 @@ def handleSignUp(request):
         request.session['lid'] = lid
         userSave.uid = lid
         userSave.name = name
+        userSave.email = email
         session_id=user['idToken']
         request.session['uid'] = session_id
         userSave.save()
