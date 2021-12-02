@@ -31,7 +31,7 @@ def waterfall(request, direction):
     else:
         currentUser = User.objects.get(uid=request.session["lid"])
         print(currentUser)
-        return render(request, "home.html", {"name": currentUser.name})
+        return render(request, "home.html", {"name": currentUser.name, "order": order})
 
 def entry(request):
     return render(request, "login.html")
