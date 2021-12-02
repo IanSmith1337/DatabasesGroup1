@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>index</title>
+</head>
+<body onload="test()">
+    <center>
+    <form method="post">
+       {% csrf_token %}
+    <!-- Student Name: <input type="text" placeholder="name" name="stname"><br>
+    Student mail: <input type="text" placeholder="email" name="stemail"><br>
+    Student phone: <input type="text" placeholder="phone" name="stmob"><br> -->
+    
+    Student Name: <input type="text" id="stn" placeholder="name" name="stname" value="hello" readonly><br>
+    Student mail: <input type="text" id="ste" placeholder="email" name="stemail" value="I am" readonly><br>
+    Student phone: <input type="text" id="stp" placeholder="phone" name="stmob" value="11" readonly><br>
+
+    
+
+    <br><br>
+    <input type="submit" value="Insert"/>
+    
+</form>
+   
+
+</center>
+<script>
+    var tot = 0;
+function f1(objButton){  
+
+	var food = objButton.previousElementSibling.previousElementSibling.innerHTML;
+	var price = parseInt(objButton.previousElementSibling.innerHTML, 10);
+        
+    let li = document.createElement("li");
+    li.textContent = food;
+    document.getElementById("foodlist").appendChild(li);
+        
+    let lii = document.createElement("li");
+    lii.textContent = price;
+    document.getElementById("pricelist").appendChild(lii);
+    
+    tot = tot + price;
+    document.getElementById("sub_total").innerHTML = tot;
+
+}
+</script>
+</body>
+</html>
