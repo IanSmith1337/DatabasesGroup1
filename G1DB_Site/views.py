@@ -157,12 +157,12 @@ def createCustomer(request):
     
 def handleOrder(request):
     if request.method=="POST": 
-        if request.POST.get("amount") and request.POST.get("deliveryfee") and request.POST.get("tax"):
+        if request.POST.get("amount") and request.POST.get("deliveryfee") and request.POST.get("tax") and request.POST.get("total"):
             order1 = Order1()
             order1.amount=request.POST.get('amount')
             order1.deliveryfee=request.POST.get('deliveryfee')
             order1.tax=request.POST.get('tax')
-            order1.total_amount="0"
+            order1.total_amount= request.POST.get('total')
             order1.save()
 
         return render(request, 'order.html')

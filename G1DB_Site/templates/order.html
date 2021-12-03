@@ -160,14 +160,12 @@
          Sub-total      : <input type="text" id="amount" placeholder="amount" name="amount" value="0.00" readonly><br>
          Delivery fee   : <input type="text" id="deliveryfee" placeholder="deliveryfee" name="deliveryfee" value="0.00" readonly><br>
          Tax            : <input type="text" id="tax" placeholder="tax" name="tax" value="0" readonly><br>
+         Total          : <input type="text" id="total" placeholder="total" name="total" value="0" readonly><br>
              
          <br><br>
          <input type="submit" value="Insert" onclick="return alert('Order Placed.. Thanks!')">
          
-     </form>
-
-     <p>{{ order }}</p>
-               
+     </form>             
     </div>
     
 </div>
@@ -176,7 +174,8 @@
 </div>
 </div>
 <script>
-    var tot = 0;
+    var subtot = 0;
+    var total = 0;
     var tax = 0;
 function display_hotspots(){
         document.getElementById("hs_div1").style.visibility='hidden';
@@ -217,12 +216,14 @@ function f1(objButton){
     lii.textContent = price;
     document.getElementById("pricelist").appendChild(lii);
     
-    tot = tot + price;
-    document.getElementById("amount").value = tot;
+    subtot = subtot + price;
+    document.getElementById("amount").value = subtot;
  
     tax = tax + 1;
     document.getElementById("tax").value = tax;
     
+    total = subtot + tax;
+    document.getElementById("total").value = total;
 }
 
 function f2(objButton){
