@@ -4,7 +4,7 @@ from django.contrib.auth.password_validation import validate_password
 from pyrebase import *
 from pyrebase.pyrebase import Database
 from G1DB_Site.errors import *
-from G1DB_Site.models import Customer, Employee, User, Order1
+from G1DB_Site.models import Customer, Employee, User, Order1, RankData
 
 
 
@@ -164,7 +164,15 @@ def handleOrder(request):
             order1.tax=request.POST.get('tax')
             order1.total_amount= request.POST.get('total')
             order1.save()
-
+            
+        if request.POST.get("zipcode"):
+            rd = RankData()
+            zipC = request.POST.get("zipcode")
+            zipData = RankData.objects.get(zipcode=zipC)
+            print(zipData)
+            rank = zipData.rank
+            return render(request, 'order.html', {"rank": rank})
+        
         return render(request, 'order.html')
     else:
         return render(request, 'order.html')

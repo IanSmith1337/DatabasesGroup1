@@ -104,27 +104,35 @@
 </div>
 
 <div id="customer_address"> 
-    
+    <form method="POST" action="">
+        {% csrf_token %}
     <div>Delivery Information:<br>
     <input type="text" placeholder="First Name">
     <input type="text" placeholder="Last Name">
     <input type="text" placeholder="Address Line 1">
-    <input type="text" id="zipcode" placeholder="Zip Code"><br><br>
+    <input type="text" id="zipcode" name="zipcode" placeholder="Zip Code"><br><br>
     </div>
     
     <button onclick="display_hotspots()">check for delivery/hotspot options</button>
+    </form>
 <br><br>
 
 <div class="flex-container" id="bottom_box">
     <div class="flex-child" id="hotspot_div">
     <table>
-        {% for datadisplay in dispdata%}
             <tr>
-                <th>{{datadisplay.rank}}</th>
-                <th>{{datadisplay.zipcode}}</th>
-            
+                <th id="rank">This zipcode is rank: {{ rank }}</th>
+                <script type="text/javascript">
+                    var benefit = {{ rank }}
+                    var benefitItem = document.createElement("th");
+                    switch ( benefit ) {
+                        case 1:
+                        benefitItem.innerHTML = "\n Benefit: Free Delivery";
+                        document.getElementById("rank").parentElement.appendChild(benefitItem);
+                        //TODO: Add more cases here!
+                    }
+                </script>
             </tr>
-            {% endfor %}
     </table>
             <!-- <div id="hs_div1">
             <span>Free Delivery - $</span>

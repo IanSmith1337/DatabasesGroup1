@@ -40,7 +40,7 @@ class Employee(models.Model):
     class Meta:
         db_table = 'employee'
 
-class rankdata(models.Model):
+class RankData(models.Model):
     rank=models.IntegerField()
     zipcode=models.CharField(max_length=100)
     
@@ -69,8 +69,7 @@ class Orderdetails(models.Model):
     custid = models.ForeignKey(Customer, models.DO_NOTHING, db_column='Custid', blank=True, null=True)  # Field name made lowercase.
     empid = models.ForeignKey(Employee, models.DO_NOTHING, db_column='Empid', blank=True, null=True)  # Field name made lowercase.
     orderid = models.ForeignKey(Order1, models.DO_NOTHING, db_column='orderid', blank=True, null=True)
-    itemid = models.ForeignKey('Items', models.DO_NOTHING, db_column='itemid', blank=True, null=True)
-
+    
     class Meta:
         db_table = 'orderdetails'
 
@@ -94,14 +93,13 @@ class Hotspot(models.Model):
         db_table = 'hotspot'
 
 
-class Items(models.Model):
+"""class Items(models.Model):
     itemid = models.AutoField(primary_key=True)
     itemprice = models.FloatField(blank=True, null=True)
     itemname = models.CharField(max_length=20, blank=True, null=True)
 
     class Meta:
-        db_table = 'items'
-
+        db_table = 'items'"""
 
 class AuthGroup(models.Model):
     name = models.CharField(unique=True, max_length=150)
