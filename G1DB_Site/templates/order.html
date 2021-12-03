@@ -154,12 +154,12 @@
     </div>
     <div class="flex-child">
 
-        <form method="post" action="/postOrder/">
+        <form method="POST" action="">
             {% csrf_token %}
          
-         Sub-total      : <input type="text" id="stn" placeholder="name" name="stname" value="0.00" readonly><br>
-         Delivery fee   : <input type="text" id="ste" placeholder="email" name="stemail" value="0.00" readonly><br>
-         Tax            : <input type="text" id="stp" placeholder="phone" name="stmob" value="0" readonly><br>
+         Sub-total      : <input type="text" id="amount" placeholder="amount" name="amount" value="0.00" readonly><br>
+         Delivery fee   : <input type="text" id="deliveryfee" placeholder="deliveryfee" name="deliveryfee" value="0.00" readonly><br>
+         Tax            : <input type="text" id="tax" placeholder="tax" name="tax" value="0" readonly><br>
              
          <br><br>
          <input type="submit" value="Insert" onclick="return alert('Order Placed.. Thanks!')">
@@ -218,16 +218,16 @@ function f1(objButton){
     document.getElementById("pricelist").appendChild(lii);
     
     tot = tot + price;
-    document.getElementById("stn").value = tot;
+    document.getElementById("amount").value = tot;
  
     tax = tax + 1;
-    document.getElementById("stp").value = tax;
+    document.getElementById("tax").value = tax;
     
 }
 
 function f2(objButton){
     var delivery_fee = parseInt(objButton.previousElementSibling.innerHTML, 10);
-    document.getElementById("ste").value = delivery_fee;
+    document.getElementById("deliveryfee").value = delivery_fee;
     
 }
 

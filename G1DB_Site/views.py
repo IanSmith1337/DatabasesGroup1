@@ -4,7 +4,7 @@ from django.contrib.auth.password_validation import validate_password
 from pyrebase import *
 from pyrebase.pyrebase import Database
 from G1DB_Site.errors import *
-from G1DB_Site.models import Customer, Employee, User
+from G1DB_Site.models import Customer, Employee, User, Order1
 
 
 
@@ -31,7 +31,7 @@ def waterfall(request, direction):
     else:
         currentUser = User.objects.get(uid=request.session["lid"])
         print(currentUser)
-        return render(request, "home.html", {"name": currentUser.name, "order": order})
+        return render(request, "home.html", {"name": currentUser.name})
 
 def entry(request):
     return render(request, "login.html")
@@ -154,3 +154,17 @@ def createCustomer(request):
 
     else:
         return render(request, 'CustomerPage.html')
+    
+def handleOrder(request):
+    if request.method=="POST": 
+        if request.POST.get("amount") and request.POST.get("deliveryfee") and request.POST.get("tax"):
+            order1 = Order1()
+            order1.amount=request.POST.get('amount')
+            order1.deliveryfee=request.POST.get('deliveryfee')
+            order1.tax=request.POST.get('tax')
+            order1.total_amount="0"
+            order1.save()
+
+        return render(request, 'order.html')
+    else:
+        return render(request, 'order.html')

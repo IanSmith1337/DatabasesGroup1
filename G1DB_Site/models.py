@@ -38,9 +38,14 @@ class Employee(models.Model):
     lname = models.CharField(db_column='Lname', max_length=20)  # Field name made lowercase.
 
     class Meta:
-        
         db_table = 'employee'
 
+class rankdata(models.Model):
+    rank=models.IntegerField()
+    zipcode=models.CharField(max_length=100)
+    
+    class Meta:
+        db_table = 'rankdata'
 
 class Order1(models.Model):
     orderid = models.AutoField(primary_key=True)
@@ -52,7 +57,6 @@ class Order1(models.Model):
     custid = models.ForeignKey(Customer, models.DO_NOTHING, db_column='Custid', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
-        
         db_table = 'order1'
 
 
@@ -68,7 +72,6 @@ class Orderdetails(models.Model):
     itemid = models.ForeignKey('Items', models.DO_NOTHING, db_column='itemid', blank=True, null=True)
 
     class Meta:
-        
         db_table = 'orderdetails'
 
 class Delivery(models.Model):
@@ -78,7 +81,6 @@ class Delivery(models.Model):
     empid = models.ForeignKey(Employee, models.DO_NOTHING, db_column='Empid', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
-        
         db_table = 'delivery'
 
 
@@ -89,7 +91,6 @@ class Hotspot(models.Model):
     deliveryid = models.ForeignKey(Delivery, models.DO_NOTHING, db_column='deliveryid', blank=True, null=True)
 
     class Meta:
-        
         db_table = 'hotspot'
 
 
@@ -99,7 +100,6 @@ class Items(models.Model):
     itemname = models.CharField(max_length=20, blank=True, null=True)
 
     class Meta:
-
         db_table = 'items'
 
 
