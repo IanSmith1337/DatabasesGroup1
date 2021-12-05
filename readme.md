@@ -9,7 +9,21 @@
 
 &nbsp;
 
-## TODO: Connect Django Auth system to HTML.
+# Dependencies
+
+## This project depends on Django and Pyrebase being installed. Make sure that you install them using:
+
+&nbsp;
+
+`python -m pip install django`
+
+&nbsp;
+
+`pip install pyrebase` 
+
+or, if that fails, try:
+
+`pip install pyrebase4`
 
 &nbsp;
 
