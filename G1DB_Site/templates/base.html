@@ -12,7 +12,15 @@
 
       <ul class="nav nav-pills">
           <li class="nav-item"><a href="{% url 'order' %}" class="nav-link" aria-current="page">Order Online</a></li>
+          {% if name %}
+          <li class="nav-item"><span class="nav-link" style="color: #000;">Hi, {{ name }}</span></li>
+          <li class="nav-item"><form action="/logout/" method="POST">
+              {% csrf_token %}
+              <input class="nav-link" type="submit" value="Logout"/>
+          </form></li>
+          {% else %}
           <li class="nav-item"><a href="{% url 'login' %}" class="nav-link">Employee Log In</a></li>
+          {% endif %}
       </ul>
     </header>
   </div>
