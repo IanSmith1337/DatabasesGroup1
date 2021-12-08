@@ -150,10 +150,10 @@ def createCustomer(request):
             post.phone = request.POST.get('phone')
             post.save()
 
-        return render(request, 'CustomerPage.html')
+        return render(request, 'customer.html')
 
     else:
-        return render(request, 'CustomerPage.html')
+        return render(request, 'customer.html')
     
 def handleOrder(request):
     if request.method=="POST": 
