@@ -1,27 +1,15 @@
-{% if message %}
-    <script>
-        alert("{{ message }}");
-    </script>
-{% endif %}
-{% if logMessage %}
-    <script>
-        var mDoc = new DOMParser().parseFromString("{{ logMessage }}", "text/html");
-        var m = new String(mDoc.documentElement.textContent);
-        m = m.replaceAll("!n!", "\n");
-        console.error(m);
-    </script>
-{% endif %}
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Home</title>
-    </head>
-    <body>
-        <h1>Home Page</h1>
-        <h2>Welcome back, {{ name }}, {{ order }}!</h2>
+{% extends 'base.html' %}
+
+{% load bootstrap5 %}
+
+{% block title %}Kaveri Home{% endblock %}
+
+{% block content %}
+
+        <h1>Welcome back, {{ name }}!</h1>
         <form action="/logout/" method="POST">
             {% csrf_token %}
             <input type="submit" value="Logout"/>
         </form>
-    </body>
-</html>
+
+{% endblock %}
