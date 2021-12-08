@@ -172,7 +172,7 @@ def handleOrder(request):
             print(zipData)
             rank = zipData.rank
             return render(request, 'order.html', {"rank": rank})
-        
+                    
         return render(request, 'order.html')
     else:
         return render(request, 'order.html')
