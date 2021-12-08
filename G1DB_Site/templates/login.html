@@ -1,37 +1,21 @@
-{% if message %}
-    <script>
-        alert("{{ message }}");
-    </script>
-{% endif %}
-{% if logMessage %}
-    <script>
-        var mDoc = new DOMParser().parseFromString("{{ logMessage }}", "text/html");
-        var m = new String(mDoc.documentElement.textContent);
-        m = m.replaceAll("!n!", "\n");
-        console.error(m);
-    </script>
-{% endif %}
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Login</title>
-    </head>
-    <body>
-        <h1>Login Page</h1>
-        <h2>You must be logged in to access this site.</h2>
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+
+{% block title%}Employee Log In{% endblock %}
+
+{% block content %}
+
         <form method="POST" action="/postLogin/">
             {% csrf_token %}
             <label for="email">Username</label><br>
             <input type="text" name="email" id="email"></input><br><br>
             <label for="password">Password</label><br>
             <input type="password" name="password" id="password"></input><br><br>
-            <input type="submit" value="Sign In">
+            <input type="submit" value="Sign In" class="btn btn-primary">
         </form>
-        <br>
-        <h3>Don't have an account?</h3>
         <form action="/signup/" method="POST">
             {% csrf_token %}
-            <input type="submit" value="Click Here!"/>
+            <input type="submit" value="Create an account" class="btn btn-secondary" style="margin-top:15px"/>
         </form>
-    </body>
-</html>
+
+{% endblock %}

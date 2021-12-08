@@ -1,23 +1,23 @@
-<!DOCTYPE html>
-<html>
+{% extends 'base.html' %}
+{% load bootstrap5 %}
 
-<head>
-    <style>
-        .flex-container {
-            display: flex;
-            height: 680px;
-            font-family: cursive;
-            padding: 10px;
-        }
+{% block title%}Order Online{% endblock %}
 
-        .item_name {
-            color: brown;
-        }
+{% block content %}
+<style>
+.flex-container {
+    display: flex;
+    height: 680px;
+}
 
-        .flex-child {
-            flex: 1;
-            border: 2px solid black;
-        }
+.flex-child {
+    flex: 1;
+    border: 2px solid yellow;
+}
+
+.flex-child:first-child {
+    margin-right: 20px;
+}
 
         .flex-child:first-child {
             margin-right: 20px;
@@ -71,6 +71,17 @@
 </head>
 
 <body>
+#right_box {
+    height: 200px;
+    overflow:hidden;
+    overflow-y:scroll;
+    max-height: 200px;
+}
+
+#bottom_box{
+    height: 310px;
+}
+</style>
 
     <div class="flex-container">
         <div class="flex-child border_round" id="list_items">
@@ -181,6 +192,24 @@
                     </form>
                 </div>
                 <br><br>
+                            <p>Four cheeses (mozzarella, parmesan, pecorino, jarlsberg)</p><hr>
+
+                            <div>
+                <div id="item5"> Grilled chicken Margherita </div>
+                         <div id="price5" value="15">13</div>
+                        <button onclick="f1(this)" value="new item"> Add new item</button>
+                </div>
+                            <p>Four cheeses (mozzarella, parmesan, pecorino, jarlsberg)</p><hr>
+
+
+                <div>
+                <div id="item6">Formaggio </div>
+                         <div id="price6" value="12">12</div>
+                        <button onclick="f1(this)" value="new item"> Add new item</button>
+                </div>
+                            <p>Fresh tomatoes, mozzarella, chicken, onions</p><hr>
+
+</div>
 
                 <div class="flex-container" id="bottom_box">
                     <div class="flex-child border_round" id="hotspot_div">
@@ -310,6 +339,149 @@
             // }
 
         }
+    <div class="flex-child">
+        <ul id="pricelist"></ul>
+
+    </div>
+
+</div>
+
+<div id="customer_address">
+    <form method="POST" action="">
+        {% csrf_token %}
+    <div>Delivery Information:<br>
+    <input type="text" placeholder="First Name">
+    <input type="text" placeholder="Last Name">
+    <input type="text" placeholder="Address Line 1">
+    <input type="text" id="zipcode" name="zipcode" placeholder="Zip Code"><br><br>
+    </div>
+
+    <button onclick="display_hotspots()">check for delivery/hotspot options</button>
+    </form>
+<br><br>
+
+<div class="flex-container" id="bottom_box">
+    <div class="flex-child" id="hotspot_div">
+    <table>
+            <tr>
+                <th id="rank">This zipcode is rank: {{ rank }}</th>
+                <script type="text/javascript">
+                    var benefit = {{ rank }}
+                    var benefitItem = document.createElement("th");
+                    switch ( benefit ) {
+                        case 1:
+                        benefitItem.innerHTML = "\n Benefit: Free Delivery";
+                        document.getElementById("rank").parentElement.appendChild(benefitItem);
+                        //TODO: Add more cases here!
+                    }
+                </script>
+            </tr>
+    </table>
+            <!-- <div id="hs_div1">
+            <span>Free Delivery - $</span>
+            <span id="hotspot1" value="0">0</span>
+            <button id="hs1" onclick="f2(this)"> select </button><hr>
+           </div>
+           <div id="hs_div2">
+            <span>Best buy parking lot - $</span>
+            <span id="hotspot2" value="1">1</span>
+            <button id="hs2" onclick="f2(this)"> select </button><hr>
+           </div>
+           <div id="hs_div3">
+            <span>Giant foods parking lot - $</span>
+            <span id="hotspot3" value="2">2</span>
+            <button id="hs3" onclick="f2(this)"> select </button><hr>
+           </div>
+           <div id="hs_div4">
+            <span>Walmart parking lot - $</span>
+            <span id="hotspot4" value="10">3</span>
+            <button id="hs4" onclick="f2(this)"> select </button><hr>
+           </div>
+           <div id="hs_div5">
+            <span>Target parking lot - $</span>
+            <span id="hotspot5" value="10">4</span>
+            <button id="hs5" onclick="f2(this)"> select </button><hr>
+           </div> -->
+    </div>
+    <div class="flex-child">
+
+        <form method="POST" action="">
+            {% csrf_token %}
+
+         Sub-total      : <input type="text" id="amount" placeholder="amount" name="amount" value="0.00" readonly><br>
+         Delivery fee   : <input type="text" id="deliveryfee" placeholder="deliveryfee" name="deliveryfee" value="0.00" readonly><br>
+         Tax            : <input type="text" id="tax" placeholder="tax" name="tax" value="0" readonly><br>
+         Total          : <input type="text" id="total" placeholder="total" name="total" value="0" readonly><br>
+
+         <br><br>
+         <input type="submit" value="Insert" onclick="return alert('Order Placed.. Thanks!')">
+
+     </form>
+    </div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+    var subtot = 0;
+    var total = 0;
+    var tax = 0;
+function display_hotspots(){
+        document.getElementById("hs_div1").style.visibility='hidden';
+        document.getElementById("hs_div2").style.visibility='hidden';
+        document.getElementById("hs_div3").style.visibility='hidden';
+        document.getElementById("hs_div4").style.visibility='hidden';
+        document.getElementById("hs_div5").style.visibility='hidden';
+    var zipcode_arr = ['10001', '10002', '10003', '10004', '10005'];
+    var check_zip = document.getElementById("zipcode").value;
+
+    if (check_zip == zipcode_arr[0]){
+        document.getElementById("hs_div1").style.visibility='visible';
+        // document.getElementById("hs_div2").style.visibility='visible';
+        // document.getElementById("hs_div3").style.visibility='visible';
+        // document.getElementById("hs_div4").style.visibility='visible';
+        // document.getElementById("hs_div5").style.visibility='visible';
+    }
+    else if(check_zip == zipcode_arr[1] || check_zip == zipcode_arr[2] || check_zip == zipcode_arr[3] || check_zip == zipcode_arr[4]){
+        document.getElementById("hs_div2").style.visibility='visible';
+        document.getElementById("hs_div3").style.visibility='visible';
+        document.getElementById("hs_div4").style.visibility='visible';
+        document.getElementById("hs_div5").style.visibility='visible';
+    }
+
+}
+
+
+function f1(objButton){
+
+	var food = objButton.previousElementSibling.previousElementSibling.innerHTML;
+	var price = parseInt(objButton.previousElementSibling.innerHTML, 10);
+
+    let li = document.createElement("li");
+    li.textContent = food;
+    document.getElementById("foodlist").appendChild(li);
+
+    let lii = document.createElement("li");
+    lii.textContent = price;
+    document.getElementById("pricelist").appendChild(lii);
+
+    subtot = subtot + price;
+    document.getElementById("amount").value = subtot;
+
+    tax = tax + 1;
+    document.getElementById("tax").value = tax;
+
+    total = subtot + tax;
+    document.getElementById("total").value = total;
+}
+
+function f2(objButton){
+    var delivery_fee = parseInt(objButton.previousElementSibling.innerHTML, 10);
+    document.getElementById("deliveryfee").value = delivery_fee;
+
+}
 
 
         function f1(objButton) {
@@ -343,6 +515,5 @@
 
     </script>
 
-</body>
+{% endblock %}
 
-</html>

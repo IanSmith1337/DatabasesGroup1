@@ -1,0 +1,97 @@
+{% extends 'loadbootstrap.html' %}
+
+{% load bootstrap5 %}
+{% load static %}
+
+{% block bootstrap5_content %}
+
+<header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+  <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+    <img src="{% static 'images/kaveri-logo.jpg' %}" width="65px" alt="Kaveri logo" style="margin: 0 10px 0 20px">
+    <span class="fs-4">Kaveri Restaurant</span>
+  </a>
+
+  <ul class="nav nav-pills">
+      <li class="nav-item"><a href="{% url 'order' %}" class="nav-link" aria-current="page">Order Online</a></li>
+      {% if name %}
+      <li class="nav-item"><span class="nav-link" style="color: #000;">Hi, {{ name }}</span></li>
+      <li class="nav-item"><form action="/logout/" method="POST">
+          {% csrf_token %}
+          <input class="nav-link" type="submit" value="Logout"/>
+      </form></li>
+      {% else %}
+      <li class="nav-item"><a href="{% url 'login' %}" class="nav-link">Employee Log In</a></li>
+      {% endif %}
+  </ul>
+</header>
+
+<div class="container-fluid">
+  <div class="row">
+<!-- Begin employee sidebar-->
+{% if name %}
+<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
+  <div class="position-sticky pt-3">
+    <ul class="nav flex-column">
+      <li>
+        <a href="#" class="nav-link link-dark">
+          <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
+          Top Locations
+        </a>
+      </li>
+      <li>
+        <a href="#" class="nav-link link-dark">
+          <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"/></svg>
+          Orders
+        </a>
+      </li>
+      <li>
+        <a href="#" class="nav-link link-dark">
+          <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
+          Menu Items
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'cC' %}" class="nav-link link-dark">
+          <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
+          Customers
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'cE' %}" class="nav-link link-dark">
+          <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
+          Employees
+        </a>
+      </li>
+      </ul>
+  </div>
+</nav>
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+  <div class="">
+
+{% else %}
+<main>
+  <div class="container-fluid">
+
+{% endif %}
+<!-- End employee sidebar -->
+        <h1>{% block title %}(no title){% endblock %}</h1>
+
+        {% if message %}
+            {% bootstrap_alert message %}
+        {% endif %}
+        {% if logMessage %}
+            <script>
+                var mDoc = new DOMParser().parseFromString("{{ logMessage }}", "text/html");
+                var m = new String(mDoc.documentElement.textContent);
+                m = m.replaceAll("!n!", "\n");
+                console.error(m);
+            </script>
+        {% endif %}
+
+        {% autoescape off %}{% bootstrap_messages %}{% endautoescape %}
+
+        {% block content %}(no content){% endblock %}
+
+</div>
+</main>
+{% endblock %}
