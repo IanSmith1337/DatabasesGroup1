@@ -27,6 +27,6 @@ urlpatterns = [
     path('customer/', views.createCustomer, name="cC"),
     path('postLogin/', views.handleLogin),
     path('postSignUp/', views.handleSignUp),
-    path('order/', views.handleOrder, name="order"),
+    path('order/', views.order, name="order"),
     path('logout/', views.logout, name="logout")
 ]

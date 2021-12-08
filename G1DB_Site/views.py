@@ -27,17 +27,22 @@ def waterfall(request, direction):
         if(direction == "signup"):
             return render(request, "registration.html")
         else:
-            return render(request, "login.html")
+            return render(request, "login.html") # Entrypoint
     else:
-        currentUser = User.objects.get(uid=request.session["lid"])
-        print(currentUser)
-        return render(request, "home.html", {"name": currentUser.name})
+        if(direction == "home"):
+            currentUser = User.objects.get(uid=request.session["lid"])
+            return render(request, "home.html", {"name": currentUser.name})
+        if(direction == "order"):
+            return render(request, "order.html", {"name": currentUser.name})
 
 def entry(request):
-    return render(request, "login.html")
+    return render(request, "login.html") ## Entrypoint
 
 def home(request):
     return waterfall(request, "home")
+
+def home(request):
+    return waterfall(request, "order")
 
 def login(request):
     return waterfall(request, "login")
@@ -156,6 +161,8 @@ def createCustomer(request):
         return render(request, 'customer.html')
     
 def handleOrder(request):
+    if(not request.session.__contains__("uid")):
+        return redirect("/home")
     if request.method=="POST": 
         if request.POST.get("amount") and request.POST.get("deliveryfee") and request.POST.get("tax") and request.POST.get("total"):
             order1 = Order1()
