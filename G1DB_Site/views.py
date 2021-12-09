@@ -41,7 +41,7 @@ def entry(request):
 def home(request):
     return waterfall(request, "home")
 
-def home(request):
+def order(request):
     return waterfall(request, "order")
 
 def login(request):
