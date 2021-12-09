@@ -37,7 +37,7 @@ def waterfall(request, direction):
         if(direction == "order"):
             return render(request, "order.html", {"name": currentUser.name})
         else:
-            return render(request, "order.html")
+            return render(request, "home.html", {"name": currentUser.name})
 
 def entry(request):
     return render(request, "order.html") ## Entrypoint
