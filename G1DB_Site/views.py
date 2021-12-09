@@ -26,6 +26,8 @@ def waterfall(request, direction):
     if(not request.session.__contains__("uid")):
         if(direction == "signup"):
             return render(request, "registration.html")
+        if(direction == "login"):
+            return render(request, "login.html")
         else:
             return render(request, "order.html") # Entrypoint
     else:
@@ -34,6 +36,8 @@ def waterfall(request, direction):
             return render(request, "home.html", {"name": currentUser.name})
         if(direction == "order"):
             return render(request, "order.html", {"name": currentUser.name})
+        else:
+            return render(request, "home.html", {"name": currentUser.name})
 
 def entry(request):
     return render(request, "order.html") ## Entrypoint
