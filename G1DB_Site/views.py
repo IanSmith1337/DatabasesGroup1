@@ -148,6 +148,8 @@ def createEmployee(request):
 
 
 def createCustomer(request):
+    customers = Customer.objects.all()
+
     if request.method == 'POST':
         if request.POST.get('custname') and request.POST.get('address') and request.POST.get('city') and request.POST.get('state') and request.POST.get('zipcode') and request.POST.get('phone'):
             post = Customer()
@@ -159,10 +161,10 @@ def createCustomer(request):
             post.phone = request.POST.get('phone')
             post.save()
 
-        return render(request, 'customer.html')
+        return render(request, 'customer.html', {'customer':customers})
 
     else:
-        return render(request, 'customer.html')
+        return render(request, 'customer.html', {'customer':customers})
     
 def handleOrder(request):
     if(not request.session.__contains__("uid")):

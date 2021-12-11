@@ -1,24 +1,46 @@
 {% extends 'base.html' %}
 {% load bootstrap5 %}
 
-{% block title%}Customer{% endblock %}
+{% block title%}Customers{% endblock %}
 
 {% block content %}
-        <h2>Create a Customer</h2>
-        <form action="" method="POST">
-            {% csrf_token %}
-            <label for="custname">Customer Name:</label><br><br>
-            <input type="text" name="custname"/><br><br>
-            <label for="address">Address:</label><br><br>
-            <input type="text" name="address"/><br/>
-            <label for="city">City:</label><br><br>
-            <input type="text" name="city"/><br><br>
-            <label for="state">State:</label><br><br>
-            <input type="text" name="state"/><br><br>
-            <label for="zipcode">Zipcode:</label><br><br>
-            <input type="text" name="zipcode"/><br><br>
-            <label for="phone">Phone Number:</label><br><br>
-            <input type="text" name="phone"/><br><br>
-            <input type="submit" value="Post"/>
-        </form>
+<h2 class="visually-hidden">Existing Customers</h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Name</th>
+      <th scope="col">Zipcode</th>
+      <th scope="col">Phone Number</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for c in customer %}
+    <tr>
+      <th scope="row">{{c.custid}}</th>
+      <td>{{c.custname}}</td>
+      <td>{{c.zipcode}}</td>
+      <td>{{c.phone}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<h2>Create a New Customer</h2>
+<form action="" method="POST">
+    {% csrf_token %}
+    <label for="custname">Customer Name:</label><br><br>
+    <input type="text" name="custname"/><br><br>
+    <label for="address">Address:</label><br><br>
+    <input type="text" name="address"/><br/>
+    <label for="city">City:</label><br><br>
+    <input type="text" name="city"/><br><br>
+    <label for="state">State:</label><br><br>
+    <input type="text" name="state"/><br><br>
+    <label for="zipcode">Zipcode:</label><br><br>
+    <input type="text" name="zipcode"/><br><br>
+    <label for="phone">Phone Number:</label><br><br>
+    <input type="text" name="phone"/><br><br>
+    <input type="submit" value="Post"/>
+</form>
 {% endblock %}
