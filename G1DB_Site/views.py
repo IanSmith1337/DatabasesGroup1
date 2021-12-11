@@ -134,6 +134,8 @@ def handleSignUp(request):
     return redirect("/home")
 
 def createEmployee(request):
+    employees = Employee.objects.all()
+
     if request.method == 'POST':
         if request.POST.get('fname') and request.POST.get('lname'):
             post = Employee()
@@ -141,11 +143,10 @@ def createEmployee(request):
             post.lname = request.POST.get('lname')
             post.save()
 
-        return render(request, 'Employee.html')
+        return render(request, 'Employee.html', {'employee':employees})
 
     else:
-        return render(request, 'Employee.html')
-
+        return render(request, 'Employee.html', {'employee':employees})
 
 def createCustomer(request):
     customers = Customer.objects.all()
