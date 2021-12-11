@@ -13,8 +13,8 @@
 
   <ul class="nav nav-pills">
       <li class="nav-item"><a href="{% url 'order' %}" class="nav-link" aria-current="page">Order Online</a></li>
-      {% if name %}
-      <li class="nav-item"><span class="nav-link" style="color: #000;">Hi, {{ name }}</span></li>
+      {% if request.session.uid %}
+      <li class="nav-item"><span class="nav-link" style="color: #000;">Hi, {{ currentUser.name }}</span></li>
       <li class="nav-item"><form action="/logout/" method="POST">
           {% csrf_token %}
           <input class="nav-link" type="submit" value="Logout"/>
@@ -28,7 +28,7 @@
 <div class="container-fluid">
   <div class="row">
 <!-- Begin employee sidebar-->
-{% if name %}
+{% if request.session.uid %}
 <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
   <div class="position-sticky pt-3">
     <ul class="nav flex-column">
