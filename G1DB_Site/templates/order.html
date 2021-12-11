@@ -71,18 +71,6 @@
 </head>
 
 <body>
-#right_box {
-    height: 200px;
-    overflow:hidden;
-    overflow-y:scroll;
-    max-height: 200px;
-}
-
-#bottom_box{
-    height: 310px;
-}
-</style>
-
     <div class="flex-container">
         <div class="flex-child border_round" id="list_items">
             <h1 style="color:crimson"> Menu Items</h1>
@@ -191,25 +179,6 @@
                         <button onclick="display_hotspots()">check for delivery/hotspot options</button>
                     </form>
                 </div>
-                <br><br>
-                            <p>Four cheeses (mozzarella, parmesan, pecorino, jarlsberg)</p><hr>
-
-                            <div>
-                <div id="item5"> Grilled chicken Margherita </div>
-                         <div id="price5" value="15">13</div>
-                        <button onclick="f1(this)" value="new item"> Add new item</button>
-                </div>
-                            <p>Four cheeses (mozzarella, parmesan, pecorino, jarlsberg)</p><hr>
-
-
-                <div>
-                <div id="item6">Formaggio </div>
-                         <div id="price6" value="12">12</div>
-                        <button onclick="f1(this)" value="new item"> Add new item</button>
-                </div>
-                            <p>Fresh tomatoes, mozzarella, chicken, onions</p><hr>
-
-</div>
 
                 <div class="flex-container" id="bottom_box">
                     <div class="flex-child border_round" id="hotspot_div">
@@ -402,21 +371,6 @@
             <span id="hotspot5" value="10">4</span>
             <button id="hs5" onclick="f2(this)"> select </button><hr>
            </div> -->
-    </div>
-    <div class="flex-child">
-
-        <form method="POST" action="">
-            {% csrf_token %}
-
-         Sub-total      : <input type="text" id="amount" placeholder="amount" name="amount" value="0.00" readonly><br>
-         Delivery fee   : <input type="text" id="deliveryfee" placeholder="deliveryfee" name="deliveryfee" value="0.00" readonly><br>
-         Tax            : <input type="text" id="tax" placeholder="tax" name="tax" value="0" readonly><br>
-         Total          : <input type="text" id="total" placeholder="total" name="total" value="0" readonly><br>
-
-         <br><br>
-         <input type="submit" value="Insert" onclick="return alert('Order Placed.. Thanks!')">
-
-     </form>
     </div>
 
 </div>
