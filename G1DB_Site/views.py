@@ -32,7 +32,7 @@ def waterfall(request, direction):
         if(direction == "login"):
             return render(request, "login.html")
         else:
-            return render(request, "custHome.html") # Entrypoint
+            return render(request, "order.html") # Entrypoint
     else:
         currentUser = User.objects.get(uid=request.session["lid"])
         if(direction == "order"):
@@ -41,7 +41,7 @@ def waterfall(request, direction):
             return render(request, "item.html", {"name": currentUser.name})
         else:
             return render(request, "home.html")
-            
+
 def entry(request):
     return redirect("home") ## Entrypoint
 
@@ -214,7 +214,7 @@ def item(request):
 def handleOrder(request):
     if(not request.session.__contains__("uid")):
         raise PermissionDenied()
-    if request.method=="POST": 
+    if request.method=="POST":
         if request.POST.get("amount") and request.POST.get("deliveryfee") and request.POST.get("tax") and request.POST.get("total"):
             order1 = Order1()
             order1.amount=request.POST.get('amount')
