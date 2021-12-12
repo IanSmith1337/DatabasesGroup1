@@ -36,7 +36,8 @@ def waterfall(request, direction):
     else:
         currentUser = User.objects.get(uid=request.session["lid"])
         if(direction == "order"):
-            return render(request, "order.html", {"name": currentUser.name})
+            items = Items.objects.all()
+            return render(request, "order.html", {"name": currentUser.name, 'items':items})
         if(direction == "item"):
             return render(request, "item.html", {"name": currentUser.name})
         else:
@@ -212,6 +213,8 @@ def item(request):
     return render(request, 'item.html', {'items':items})
 
 def handleOrder(request):
+    items = Items.objects.all()
+
     if(not request.session.__contains__("uid")):
         raise PermissionDenied()
     if request.method=="POST":
@@ -231,6 +234,6 @@ def handleOrder(request):
             rank = zipData.rank
             return render(request, 'order.html', {"rank": rank})
 
-        return render(request, 'order.html')
+        return render(request, 'order.html', {'items':items})
     else:
-        return render(request, 'order.html')
+        return render(request, 'order.html', {'items':items})

@@ -16,7 +16,7 @@
     {% for i in items %}
     <tr>
       <th scope="row">{{i.itemname}}</th>
-      <td>{{i.itemprice}}</td>
+      <td>${{i.itemprice|floatformat:2}}</td>
     </tr>
     {% endfor %}
   </tbody>

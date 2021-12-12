@@ -1,86 +1,21 @@
 {% extends 'base.html' %}
 {% load bootstrap5 %}
+{% load static %}
 
 {% block title%}Order Online{% endblock %}
 
 {% block content %}
+<link rel="stylesheet" type="text/css" href='{% static "/css/style.css" %}'>
 
     <div class="flex-container">
         <div class="flex-child border_round" id="list_items">
-            <h1 style="color:crimson"> Menu Items</h1>
-            <hr>
+          {% for i in items %}
             <div>
-                <div id="item1" class="item_name"> Pizza </div>
-                <div id="price1" value="15">22</div>
-                <button onclick="f1(this)" value="new item"> Add new item</button>
+                <div id="item{{ forloop.counter }}" class="item_name">{{i.itemname}}</div>
+                <div id="price1" value="{{ i.itemprice }}">${{i.itemprice|floatformat:2}}</div>
+                <button onclick="f1(this)" value="new item">Add to order</button>
             </div>
-            <p>Four cheeses (mozzarella, parmesan, pecorino, jarlsberg)</p>
-            <hr>
-
-            <div>
-                <div id="item2" class="item_name"> Grilled chicken Margherita </div>
-                <div id="price2" value="15">15</div>
-                <button onclick="f1(this)" value="new item"> Add new item</button>
-            </div>
-            <p>Four cheeses (mozzarella, parmesan, pecorino, jarlsberg)</p>
-            <hr>
-
-            <div>
-                <div id="item3" class="item_name">Formaggio </div>
-                <div id="price3" value="10">10</div>
-                <button onclick="f1(this)" value="new item"> Add new item</button>
-            </div>
-            <p>Fresh tomatoes, mozzarella, chicken, onions</p>
-            <hr>
-
-            <div>
-                <div id="item4" class="item_name"> Pizza </div>
-                <div id="price4" value="15">7</div>
-                <button onclick="f1(this)" value="new item"> Add new item</button>
-            </div>
-            <p>Four cheeses (mozzarella, parmesan, pecorino, jarlsberg)</p>
-            <hr>
-
-            <div>
-                <div id="item5" class="item_name"> Grilled chicken Margherita </div>
-                <div id="price5" value="15">13</div>
-                <button onclick="f1(this)" value="new item"> Add new item</button>
-            </div>
-            <p>Four cheeses (mozzarella, parmesan, pecorino, jarlsberg)</p>
-            <hr>
-
-            <div>
-                <div id="item6" class="item_name">Formaggio </div>
-                <div id="price6" value="12">12</div>
-                <button onclick="f1(this)" value="new item"> Add new item</button>
-            </div>
-            <p>Fresh tomatoes, mozzarella, chicken, onions</p>
-            <hr>
-            <div>
-                <div id="item7" class="item_name"> Pizza </div>
-                <div id="price7" value="8">8</div>
-                <button onclick="f1(this)" value="new item"> Add new item</button>
-            </div>
-            <p>Four cheeses (mozzarella, parmesan, pecorino, jarlsberg)</p>
-            <hr>
-
-            <div>
-                <div id="item8" class="item_name"> Grilled chicken Margherita </div>
-                <div id="price8" value="9">9</div>
-                <button onclick="f1(this)" value="new item"> Add new item</button>
-            </div>
-            <p>Four cheeses (mozzarella, parmesan, pecorino, jarlsberg)</p>
-            <hr>
-
-            <div>
-                <div id="item9" class="item_name">Formaggio </div>
-                <div id="price9" value="12">12</div>
-                <button onclick="f1(this)" value="new item"> Add new item</button>
-            </div>
-            <p>Fresh tomatoes, mozzarella, chicken, onions</p>
-            <hr>
-
-
+          {% endfor %}
         </div>
 
 
