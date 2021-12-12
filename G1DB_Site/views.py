@@ -56,13 +56,16 @@ def signup(request):
     return waterfall(request, "signup")
 
 def display404(request, exception):
-    return render(request, "404.html", exception)
+    print(exception)
+    return render(request, "404.html")
 
 def display403(request, exception):
-    return render(request, "403.html", exception)
+    print(exception)
+    return render(request, "403.html")
 
 def display400(request, exception):
-    return render(request, "400.html", exception)
+    print(exception)
+    return render(request, "400.html")
 
 def display500(request):
     return render(request, "500.html")
