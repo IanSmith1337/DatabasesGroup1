@@ -13,7 +13,7 @@ class User(models.Model):
     uid = models.CharField(db_column='uid', primary_key=True, max_length=255)
     email = models.EmailField(db_column='email')
     name = models.CharField(db_column='name', blank=True, max_length=255)
-    
+
     class Meta:
         db_table = 'user'
 
@@ -27,7 +27,7 @@ class Customer(models.Model):
     phone = models.CharField(db_column='Phone', max_length=10, blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
-        
+
         db_table = 'customer'
 
 
@@ -92,7 +92,7 @@ class Hotspot(models.Model):
         db_table = 'hotspot'
 
 
-class Item(models.Model):
+class Items(models.Model):
     itemid = models.AutoField(primary_key=True)
     itemprice = models.FloatField(blank=True, null=True)
     itemname = models.CharField(max_length=20, blank=True, null=True)
@@ -226,4 +226,3 @@ class Sysdiagrams(models.Model):
         managed = False
         db_table = 'sysdiagrams'
         unique_together = (('principal_id', 'name'),)
-

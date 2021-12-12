@@ -1,11 +1,13 @@
+import datetime
 from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
 from django.http.response import Http404
 from django.shortcuts import render, redirect
 from django.contrib.auth.password_validation import validate_password
+from django.db.models import Count
 from pyrebase import *
 from pyrebase.pyrebase import Database
 from G1DB_Site.errors import *
-from G1DB_Site.models import Customer, Employee, User, Order1, RankData, Item
+from G1DB_Site.models import Customer, Employee, User, Order1, Orderdetails, RankData, Items
 
 
 
@@ -183,7 +185,32 @@ def createCustomer(request):
 
     else:
         return render(request, 'customer.html', {'customer':customers})
-    
+
+def topLocations(request):
+    start_date = datetime.datetime.now() - datetime.timedelta(days=30)
+    prevMonthOrders = Orderdetails.objects \
+        .prefetch_related('custid') \
+        .filter(orderdate__gte=start_date) \
+        .values('custid__zipcode') \
+        .annotate(num_orders=Count('custid__zipcode')) \
+        .order_by('-num_orders')
+
+
+    #return render(request, 'top-locations.html', {'toplocations':toplocations})
+    return render(request, 'top-locations.html', {'toplocations':prevMonthOrders})
+
+def item(request):
+    items = Items.objects.all()
+
+    if request.method == 'POST':
+        if request.POST.get('itemname') and request.POST.get('itemprice'):
+            post = Item()
+            post.itemname = request.POST.get('itemname')
+            post.itemprice = request.POST.get('itemprice')
+            post.save()
+
+    return render(request, 'item.html', {'items':items})
+
 def handleOrder(request):
     if(not request.session.__contains__("uid")):
         raise PermissionDenied()
