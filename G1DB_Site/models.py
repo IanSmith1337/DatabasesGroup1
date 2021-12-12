@@ -39,13 +39,6 @@ class Employee(models.Model):
     class Meta:
         db_table = 'employee'
 
-class RankData(models.Model):
-    rank=models.IntegerField()
-    zipcode=models.CharField(max_length=100)
-    
-    class Meta:
-        db_table = 'rankdata'
-
 class Order1(models.Model):
     orderid = models.AutoField(primary_key=True)
     amount = models.FloatField(blank=True, null=True)
@@ -68,9 +61,12 @@ class Orderdetails(models.Model):
     custid = models.ForeignKey(Customer, models.DO_NOTHING, db_column='Custid', blank=True, null=True)  # Field name made lowercase.
     empid = models.ForeignKey(Employee, models.DO_NOTHING, db_column='Empid', blank=True, null=True)  # Field name made lowercase.
     orderid = models.ForeignKey(Order1, models.DO_NOTHING, db_column='orderid', blank=True, null=True)
-    
+
     class Meta:
-        db_table = 'orderdetails'
+        db_table = 'ORDERDETAILS'
+
+class RankData(models.Model):
+    orders = Orderdetails.objects.all()
 
 class Delivery(models.Model):
     deliveryid = models.AutoField(primary_key=True)

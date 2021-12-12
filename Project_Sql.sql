@@ -1,11 +1,11 @@
 CREATE TABLE EMPLOYEE
-(   
+(
     Empid int IDENTITY(1,1) PRIMARY KEY,
     Fname VARCHAR(10) NOT NULL,
     Lname VARCHAR(20) NOT NULL
 );
 CREATE TABLE CUSTOMER
-(   
+(
     Custid int IDENTITY(1,1) PRIMARY KEY,
     CustName VARCHAR(10) NOT NULL,
     Address VARCHAR(20),
@@ -28,7 +28,7 @@ CREATE TABLE CUSTOMER
  deliveryfee float,
  Deliverytype varchar(20),
  Empid int,
- FOREIGN KEY (Empid) REFERENCES EMPLOYEE(Empid) 
+ FOREIGN KEY (Empid) REFERENCES EMPLOYEE(Empid)
  );
 
 Create table ORDER1

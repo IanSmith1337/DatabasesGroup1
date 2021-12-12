@@ -88,9 +88,9 @@ def handleLogin(request):
     email = request.POST.get("email")
     password = request.POST.get("password")
     try:
-        if email == None: 
+        if email == None:
             raise EmptyInputError("Email is required!")
-        if password == "": 
+        if password == "":
             raise EmptyInputError("Password is required!")
         user = auth.sign_in_with_email_and_password(email, password)
         lid = user['localId']
@@ -122,7 +122,7 @@ def handleSignUp(request):
     email = request.POST.get('email')
     password = request.POST.get('password')
     try:
-        if email == None: 
+        if email == None:
             raise EmptyInputError("Email is required!")
         if password == "":
             raise EmptyInputError("Password is required!")
@@ -222,7 +222,7 @@ def handleOrder(request):
             order1.tax=request.POST.get('tax')
             order1.total_amount= request.POST.get('total')
             order1.save()
-            
+
         if request.POST.get("zipcode"):
             rd = RankData()
             zipC = request.POST.get("zipcode")
@@ -230,6 +230,7 @@ def handleOrder(request):
             print(zipData)
             rank = zipData.rank
             return render(request, 'order.html', {"rank": rank})
+
         return render(request, 'order.html')
     else:
         return render(request, 'order.html')

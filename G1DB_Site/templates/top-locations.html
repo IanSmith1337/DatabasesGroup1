@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+
+{% block title%}Top Locations{% endblock %}
+
+{% block content %}
+<p>A report of where most delivery orders come from - your top neighborhoods. The top zipcode is eligible for free delivery. The runners up (#2 - #5) are elible for special offers at a pick-up location in the middle ("hotspot").</p>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Rank</th>
+      <th scope="col">Zipcode</th>
+      <th scope="col">Number of Orders</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for toplocation in toplocations %}
+    <tr>
+      <th scope="row">{{forloop.counter}}</th>
+      <td>{{toplocation.custid__zipcode}}</td>
+      <td>{{toplocation.num_orders}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}
