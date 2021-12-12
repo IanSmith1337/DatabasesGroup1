@@ -1,4 +1,5 @@
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
+from django.http.response import Http404
 from django.shortcuts import render, redirect
 from django.contrib.auth.password_validation import validate_password
 from pyrebase import *
@@ -29,21 +30,19 @@ def waterfall(request, direction):
         if(direction == "login"):
             return render(request, "login.html")
         else:
-            return render(request, "order.html") # Entrypoint
+            return render(request, "custHome.html") # Entrypoint
     else:
-        if(direction == "home"):
-            currentUser = User.objects.get(uid=request.session["lid"])
-            return render(request, "home.html", {"name": currentUser.name})
+        currentUser = User.objects.get(uid=request.session["lid"])
         if(direction == "order"):
             return render(request, "order.html", {"name": currentUser.name})
         else:
             return render(request, "home.html", {"name": currentUser.name})
-
+            
 def entry(request):
-    return render(request, "order.html") ## Entrypoint
+    return redirect("home") ## Entrypoint
 
 def home(request):
-    return waterfall(request, "home")
+    return waterfall(request, None)
 
 def order(request):
     return waterfall(request, "order")
@@ -53,6 +52,18 @@ def login(request):
 
 def signup(request):
     return waterfall(request, "signup")
+
+def display404(request, exception):
+    return render(request, "404.html", exception)
+
+def display403(request, exception):
+    return render(request, "403.html", exception)
+
+def display400(request, exception):
+    return render(request, "400.html", exception)
+
+def display500(request):
+    return render(request, "500.html")
 
 def logout(request):
     global currentUser
@@ -69,17 +80,14 @@ def handleLogin(request):
         return redirect("/home")
     email = request.POST.get("email")
     password = request.POST.get("password")
-    print("retrieve success.")
     try:
         if email == None: 
             raise EmptyInputError("Email is required!")
         if password == "": 
             raise EmptyInputError("Password is required!")
         user = auth.sign_in_with_email_and_password(email, password)
-        print("signin success.")
         lid = user['localId']
         request.session['lid'] = lid
-        print("uid lookup success.")
         currentUser = User.objects.get(uid=lid)
     except ObjectDoesNotExist as e:
         message = "User doesn't exist. Please create an account. \nIf this is an error, check your email address and try again."
@@ -134,6 +142,8 @@ def handleSignUp(request):
     return redirect("/home")
 
 def createEmployee(request):
+    if(not request.session.__contains__("uid")):
+        raise PermissionDenied()
     employees = Employee.objects.all()
 
     if request.method == 'POST':
@@ -143,12 +153,14 @@ def createEmployee(request):
             post.lname = request.POST.get('lname')
             post.save()
 
-        return render(request, 'Employee.html', {'employee':employees})
+        return render(request, 'employee.html', {'employee':employees})
 
     else:
-        return render(request, 'Employee.html', {'employee':employees})
+        return render(request, 'employee.html', {'employee':employees})
 
 def createCustomer(request):
+    if(not request.session.__contains__("uid")):
+        raise PermissionDenied()
     customers = Customer.objects.all()
 
     if request.method == 'POST':
@@ -169,7 +181,7 @@ def createCustomer(request):
     
 def handleOrder(request):
     if(not request.session.__contains__("uid")):
-        return redirect("/home")
+        raise PermissionDenied()
     if request.method=="POST": 
         if request.POST.get("amount") and request.POST.get("deliveryfee") and request.POST.get("tax") and request.POST.get("total"):
             order1 = Order1()
@@ -186,7 +198,6 @@ def handleOrder(request):
             print(zipData)
             rank = zipData.rank
             return render(request, 'order.html', {"rank": rank})
-                    
         return render(request, 'order.html')
     else:
         return render(request, 'order.html')

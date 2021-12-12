@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from G1DB_Site import views
- 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.entry),
@@ -30,3 +30,8 @@ urlpatterns = [
     path('order/', views.order, name="order"),
     path('logout/', views.logout, name="logout")
 ]
+
+handler404 = views.display404
+handler403 = views.display403
+handler400 = views.display400
+handler500 = views.display500
