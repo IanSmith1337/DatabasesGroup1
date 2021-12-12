@@ -32,7 +32,8 @@ def waterfall(request, direction):
         if(direction == "login"):
             return render(request, "login.html")
         else:
-            return render(request, "order.html") # Entrypoint
+            items = Items.objects.all()
+            return render(request, "order.html", {'items':items}) # Entrypoint
     else:
         currentUser = User.objects.get(uid=request.session["lid"])
         if(direction == "order"):
@@ -190,7 +191,7 @@ def createCustomer(request):
 def topLocations(request):
     if(not request.session.__contains__("uid")):
         raise PermissionDenied()
-        
+
     start_date = datetime.datetime.now() - datetime.timedelta(days=30)
     prevMonthOrders = Orderdetails.objects \
         .prefetch_related('custid') \
