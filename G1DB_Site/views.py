@@ -188,6 +188,9 @@ def createCustomer(request):
         return render(request, 'customer.html', {'customer':customers})
 
 def topLocations(request):
+    if(not request.session.__contains__("uid")):
+        raise PermissionDenied()
+        
     start_date = datetime.datetime.now() - datetime.timedelta(days=30)
     prevMonthOrders = Orderdetails.objects \
         .prefetch_related('custid') \
@@ -201,6 +204,9 @@ def topLocations(request):
     return render(request, 'top-locations.html', {'toplocations':prevMonthOrders})
 
 def item(request):
+    if(not request.session.__contains__("uid")):
+        raise PermissionDenied()
+
     items = Items.objects.all()
 
     if request.method == 'POST':
