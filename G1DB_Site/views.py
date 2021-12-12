@@ -5,7 +5,7 @@ from django.contrib.auth.password_validation import validate_password
 from pyrebase import *
 from pyrebase.pyrebase import Database
 from G1DB_Site.errors import *
-from G1DB_Site.models import Customer, Employee, User, Order1, RankData
+from G1DB_Site.models import Customer, Employee, User, Order1, RankData, Item
 
 
 
@@ -35,6 +35,8 @@ def waterfall(request, direction):
         currentUser = User.objects.get(uid=request.session["lid"])
         if(direction == "order"):
             return render(request, "order.html", {"name": currentUser.name})
+        if(direction == "item"):
+            return render(request, "item.html", {"name": currentUser.name})
         else:
             return render(request, "home.html", {"name": currentUser.name})
             
