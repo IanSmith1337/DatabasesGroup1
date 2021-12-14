@@ -23,9 +23,10 @@ database = firebase.database()
 auth = firebase.auth()
 message = None
 currentUser = None
+rank = -1
 
 def waterfall(request, direction):
-    global currentUser
+    global currentUser, rank
     if(not request.session.__contains__("uid")):
         if(direction == "signup"):
             return render(request, "registration.html")
@@ -38,7 +39,7 @@ def waterfall(request, direction):
         currentUser = User.objects.get(uid=request.session["lid"])
         if(direction == "order"):
             items = Items.objects.all()
-            return render(request, "order.html", {"name": currentUser.name, 'items':items})
+            return handleOrder(request, items, rank)
         if(direction == "item"):
             return render(request, "item.html", {"name": currentUser.name})
         else:
@@ -219,9 +220,7 @@ def item(request):
 
     return render(request, 'item.html', {'items':items})
 
-def handleOrder(request):
-    items = Items.objects.all()
-
+def handleOrder(request, items, rank):
     if(not request.session.__contains__("uid")):
         raise PermissionDenied()
     if request.method=="POST":
@@ -234,13 +233,28 @@ def handleOrder(request):
             order1.save()
 
         if request.POST.get("zipcode"):
-            rd = RankData()
-            zipC = request.POST.get("zipcode")
-            zipData = RankData.objects.get(zipcode=zipC)
-            print(zipData)
-            rank = zipData.rank
-            return render(request, 'order.html', {"rank": rank})
+            zipcode = request.POST.get("zipcode")
+            start_date = datetime.datetime.now() - datetime.timedelta(days=30)
+            prevMonthOrders = Orderdetails.objects \
+            .prefetch_related('custid') \
+            .filter(orderdate__gte=start_date) \
+            .values_list('custid__zipcode') \
+            .annotate(num_orders=Count('custid__zipcode')) \
+            .order_by('-num_orders')
+            
+            
+            for i, item in enumerate(prevMonthOrders):
+                if item[0] != zipcode:
+                    if i == len(prevMonthOrders)-1:
+                        rank = -1
+                        break;
+                if item[0] == zipcode:
+                    rank = i + 1
+                    break;
 
-        return render(request, 'order.html', {'items':items})
+            print(rank)
+            return render(request, 'order.html', {'rank': rank, 'items': items})
+
+        return render(request, 'order.html', {'rank': rank, 'items':items})
     else:
-        return render(request, 'order.html', {'items':items})
+        return render(request, 'order.html', {'rank': rank, 'items':items})

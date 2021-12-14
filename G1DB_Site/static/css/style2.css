@@ -7,7 +7,7 @@
     flex: 1;
     border: 2px solid yellow;
 }
-
+ 
 .flex-child:first-child {
     margin-right: 20px;
 }
@@ -30,15 +30,6 @@
             border-radius: 4px;
             padding: 5px;
             margin: 5px;
-        }
-
-        #hs_div1,
-        #hs_div2,
-        #hs_div3,
-        #hs_div4,
-        #hs_div5,
-        #hs_div6 {
-            visibility: hidden;
         }
 
         #list_items {

@@ -5,7 +5,7 @@
 {% block title%}Order Online{% endblock %}
 
 {% block content %}
-<link rel="stylesheet" type="text/css" href='{% static "/css/style.css" %}'>
+<link rel="stylesheet" type="text/css" href='{% static "/css/style2.css" %}'>
 
     <div class="flex-container">
         <div class="flex-child border_round" id="list_items">
@@ -13,7 +13,7 @@
             <div>
                 <div id="item{{ forloop.counter }}" class="item_name">{{i.itemname}}</div>
                 <div id="price1" value="{{ i.itemprice }}">{{i.itemprice|floatformat:2}}</div>
-                <button onclick="f1(this)" value="new item">Add to order</button>
+                <button onclick="f1(this)" id="addtoorderbutton{{ forloop.counter }}" disabled="disabled">Add to order</button>
             </div>
           {% endfor %}
         </div>
@@ -45,43 +45,145 @@
                             <input type="text" id="zipcode" name="zipcode" placeholder="Zip Code"><br><br>
                         </div>
 
-                        <button onclick="display_hotspots()">check for delivery/hotspot options</button>
+                        <button type="submit">check for delivery/hotspot options</button>
+                        <script type="text/javascript">
+                            var subtot = 0;
+                            var total = 0;
+                            var tax = 0;
+                        
+                            window.onload = function() {
+                                var benefit = {{ rank }};
+                                var benefitItem = document.createElement("button");
+                                switch (benefit) {
+                                    case 1:
+                                        // benefitItem.innerHTML = "\n Benefit: Free Delivery";
+                                        // document.getElementById("rank").parentElement.appendChild(benefitItem);
+                                        console.log("one")
+                                        document.getElementById("hs_div1").style.display = "block";
+                                        break;
+                                    //TODO: Add more cases here!
+                                    case 2:
+                                        console.log("two")
+                                        document.getElementById("hs_div2").style.display = "block";
+                                        break;
+                                    case 3:
+                                        console.log("three")
+                                        document.getElementById("hs_div3").style.display = "block";
+                                        break;
+                                        
+                                        // benefitItem.innerHTML = "\n Standard Delivery Fee";
+                                        // document.getElementById("rank").parentElement.appendChild(benefitItem);
+                                    case 4:
+                                        console.log("four")
+                                        document.getElementById("hs_div4").style.display = "block";
+                                        break;
+                                        //document.getElementById("hs_div4").style.display = "block";
+                                    case 5:
+                                        console.log("five")
+                                        document.getElementById("hs_div5").style.display = "block";
+                                        break;
+                                        //document.getElementById("hs_div5").style.display = "block";
+                                    default:
+                                        console.log("other")
+                                        document.getElementById("hs_div6").style.display = "block";
+                                        break;
+                                        //document.getElementById("hs_div6").style.display = "block";
+                                }
+                            }
+                        
+                            function f1(objButton){
+                        
+                            var food = objButton.previousElementSibling.previousElementSibling.innerHTML;
+                            var price = parseInt(objButton.previousElementSibling.value, 10);
+                            
+                        
+                            let li = document.createElement("li");
+                            li.textContent = food;
+                            document.getElementById("foodlist").appendChild(li);
+                        
+                            let lii = document.createElement("li");
+                            lii.textContent = price;
+                            document.getElementById("pricelist").appendChild(lii);
+                        
+                            subtot = subtot + price;
+                            document.getElementById("amount").value = subtot;
+                        
+                            tax = tax + 1;
+                            document.getElementById("tax").value = tax;
+                        
+                            total = subtot + tax;
+                            document.getElementById("total").value = total;
+                        }
+                        
+                            function f2(objButton){
+                                var delivery_fee = parseInt(objButton.previousElementSibling.innerHTML, 10);
+                                document.getElementById("deliveryfee").value = delivery_fee;
+                                
+                                {% for i in items %}
+                                    document.getElementById("addtoorderbutton{{ forloop.counter }}").removeAttribute("disabled");
+                                {% endfor %}
+                            }
+                        
+                        
+                            function f1(objButton) {
+                        
+                                var food = objButton.previousElementSibling.previousElementSibling.innerHTML;
+                                var price = parseInt(objButton.previousElementSibling.innerHTML, 10);
+                        
+                                let li = document.createElement("li");
+                                li.textContent = food;
+                                document.getElementById("foodlist").appendChild(li);
+                        
+                                let lii = document.createElement("li");
+                                lii.textContent = price;
+                                document.getElementById("pricelist").appendChild(lii);
+                        
+                                subtot = subtot + price;
+                                document.getElementById("amount").value = subtot;
+                        
+                                tax = tax + 1;
+                                document.getElementById("tax").value = tax;
+                        
+                                total = subtot + tax;
+                                document.getElementById("total").value = total;
+                            }
+                            </script>
                     </form>
                 </div>
 
                 <div class="flex-container" id="bottom_box">
                     <div class="flex-child border_round" id="hotspot_div">
-                        <div id="hs_div1">
+                        <div id="hs_div1" style="display: none">
                             <span>Free Delivery - $</span>
                             <span id="hotspot1" value="0">0</span>
                             <button id="hs1" onclick="f2(this)"> select </button>
                             <hr>
                         </div>
-                        <div id="hs_div2">
+                        <div id="hs_div2" style="display: none">
                             <span>Best buy parking lot - $</span>
                             <span id="hotspot2" value="1">1</span>
                             <button id="hs2" onclick="f2(this)"> select </button>
                             <hr>
                         </div>
-                        <div id="hs_div3">
+                        <div id="hs_div3" style="display: none">
                             <span>Giant foods parking lot - $</span>
                             <span id="hotspot3" value="2">2</span>
                             <button id="hs3" onclick="f2(this)"> select </button>
                             <hr>
                         </div>
-                        <div id="hs_div4">
+                        <div id="hs_div4" style="display: none">
                             <span>Walmart parking lot - $</span>
                             <span id="hotspot4" value="10">3</span>
                             <button id="hs4" onclick="f2(this)"> select </button>
                             <hr>
                         </div>
-                        <div id="hs_div5">
+                        <div id="hs_div5" style="display: none">
                             <span>Target parking lot - $</span>
                             <span id="hotspot5" value="10">4</span>
                             <button id="hs5" onclick="f2(this)"> select </button>
                             <hr>
                         </div>
-                        <div id="hs_div6">
+                        <div id="hs_div6" style="display: none;">
                             <span> Standard delivery Fee - $</span>
                             <span id="hotspot6" value="10">6</span>
                             <button id="hs6" onclick="f2(this)"> select </button>
@@ -91,21 +193,8 @@
                             <tr>
                                <th id="rank">This zipcode is rank: {{ rank }}</th>
                                 <script type="text/javascript">
-                                    var benefit = {{ rank }}
-                                    var benefitItem = document.createElement("button");
-                                    switch (benefit) {
-                                        case 1:
-                                            // benefitItem.innerHTML = "\n Benefit: Free Delivery";
-                                            // document.getElementById("rank").parentElement.appendChild(benefitItem);
-                                            document.getElementById("hs_div1").style.visibility = 'visible';
-                                        //TODO: Add more cases here!
-                                        case 2:
-                                        document.getElementById("hs_div2").style.visibility = 'visible';
-                                        case 3:
-                                        document.getElementById("hs_div3").style.visibility = 'visible';
-                                            // benefitItem.innerHTML = "\n Standard Delivery Fee";
-                                            // document.getElementById("rank").parentElement.appendChild(benefitItem);
-                                    }
+                                    function display_hotspots()
+                                    
 
                                 </script>
                             </tr>
@@ -155,72 +244,5 @@
             </div>
         </div>
     </div>
-   
-  
-<script>
-    var subtot = 0;
-    var total = 0;
-    var tax = 0;
-
-    function display_hotspots(){
-        console.log("hello");
-    }
-
-    function f1(objButton){
-
-	var food = objButton.previousElementSibling.previousElementSibling.innerHTML;
-	var price = parseInt(objButton.previousElementSibling.value, 10);
-    
-
-    let li = document.createElement("li");
-    li.textContent = food;
-    document.getElementById("foodlist").appendChild(li);
-
-    let lii = document.createElement("li");
-    lii.textContent = price;
-    document.getElementById("pricelist").appendChild(lii);
-
-    subtot = subtot + price;
-    document.getElementById("amount").value = subtot;
-
-    tax = tax + 1;
-    document.getElementById("tax").value = tax;
-
-    total = subtot + tax;
-    document.getElementById("total").value = total;
-}
-
-function f2(objButton){
-    var delivery_fee = parseInt(objButton.previousElementSibling.innerHTML, 10);
-    document.getElementById("deliveryfee").value = delivery_fee;
-
-}
-
-
-        function f1(objButton) {
-
-            var food = objButton.previousElementSibling.previousElementSibling.innerHTML;
-            var price = parseInt(objButton.previousElementSibling.innerHTML, 10);
-
-            let li = document.createElement("li");
-            li.textContent = food;
-            document.getElementById("foodlist").appendChild(li);
-
-            let lii = document.createElement("li");
-            lii.textContent = price;
-            document.getElementById("pricelist").appendChild(lii);
-
-            subtot = subtot + price;
-            document.getElementById("amount").value = subtot;
-
-            tax = tax + 1;
-            document.getElementById("tax").value = tax;
-
-            total = subtot + tax;
-            document.getElementById("total").value = total;
-        }
-
-        
-    </script>
 
 {% endblock %}
