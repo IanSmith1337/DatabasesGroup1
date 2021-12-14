@@ -212,7 +212,7 @@ def item(request):
 
     if request.method == 'POST':
         if request.POST.get('itemname') and request.POST.get('itemprice'):
-            post = Item()
+            post = Items()
             post.itemname = request.POST.get('itemname')
             post.itemprice = request.POST.get('itemprice')
             post.save()
