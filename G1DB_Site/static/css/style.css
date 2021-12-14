@@ -36,7 +36,8 @@
         #hs_div2,
         #hs_div3,
         #hs_div4,
-        #hs_div5 {
+        #hs_div5,
+        #hs_div6 {
             visibility: hidden;
         }
 
