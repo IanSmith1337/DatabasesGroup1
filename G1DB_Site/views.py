@@ -43,7 +43,7 @@ def waterfall(request, direction):
         if(direction == "item"):
             return render(request, "item.html", {"name": currentUser.name})
         else:
-            return render(request, "home.html")
+            return render(request, "home.html", {"name": currentUser.name})
 
 def entry(request):
     return redirect("home") ## Entrypoint
