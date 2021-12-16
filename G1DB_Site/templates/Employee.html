@@ -4,6 +4,26 @@
 {% block title%}Employees{% endblock %}
 
 {% block content %}
+<h2 class="visually-hidden">Existing Customers</h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">First Name</th>
+      <th scope="col">Last Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for e in employees %}
+    <tr>
+      <th scope="row">{{e.empid}}</th>
+      <td>{{e.fname}}</td>
+      <td>{{e.lname}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
         <h2>Create an Employee</h2>
         <form action="" method="POST">
             {% csrf_token %}

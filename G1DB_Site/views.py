@@ -163,10 +163,10 @@ def createEmployee(request):
             post.lname = request.POST.get('lname')
             post.save()
 
-        return render(request, 'employee.html', {'employee':employees})
+        return render(request, 'employee.html', {'employees':employees})
 
     else:
-        return render(request, 'employee.html', {'employee':employees})
+        return render(request, 'employee.html', {'employees':employees})
 
 def createCustomer(request):
     if(not request.session.__contains__("uid")):
