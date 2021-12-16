@@ -241,8 +241,8 @@ def handleOrder(request, items, rank):
             .values_list('custid__zipcode') \
             .annotate(num_orders=Count('custid__zipcode')) \
             .order_by('-num_orders')
-            
-            
+
+
             for i, item in enumerate(prevMonthOrders):
                 if item[0] != zipcode:
                     if i == len(prevMonthOrders)-1:
